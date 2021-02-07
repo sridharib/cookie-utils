@@ -24,8 +24,7 @@ public class Main {
 		String dateStr = parseArgs(args, "date");
 
 		if (fileStr == "" || dateStr == "") {
-			LOGGER.warn(
-					"Invalid arguments. Run the command like this ./run-cookie-utils.sh -f cookie_log.csv -d 2018-12-09");
+			LOGGER.warn("Invalid arguments. Example: ./run-cookie-utils.sh -f cookie_log.csv -d 2018-12-09");
 			return;
 		}
 

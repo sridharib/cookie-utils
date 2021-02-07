@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import com.quantcast.model.CookieDetail;
 
 /**
- * Cookie Utils
+ * Cookie Utils.
  * 
  */
 public class CookieUtils {
@@ -31,6 +31,12 @@ public class CookieUtils {
 	private static final String CSV_HEADER = "cookie,timestamp";
 	private static final String CSV_DELIMITER = ",";
 
+	/**
+	 * Read and parse CSV file
+	 * 
+	 * @param fileName
+	 * @return The list of parsed cookie detail objects
+	 */
 	public static List<CookieDetail> readAndParseCSV(String fileName) {
 
 		List<CookieDetail> cookieDetails = new ArrayList<>();
@@ -66,6 +72,13 @@ public class CookieUtils {
 		return cookieDetails;
 	}
 
+	/**
+	 * Fetches the most active cookie for a given date
+	 * 
+	 * @param cookieDetails
+	 * @param cookieDate
+	 * @return The list of most active cookies
+	 */
 	public static List<String> fetchMostActiveCookies(List<CookieDetail> cookieDetails, LocalDate cookieDate) {
 
 		List<String> activeCookieDetails = new ArrayList<>();
