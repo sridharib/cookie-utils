@@ -12,6 +12,7 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -45,7 +46,7 @@ public class CookieUtils {
 			try (Stream<String> stream = Files.lines(filePath)) {
 
 				// 1. filter the header
-				// 2. convert it into a List
+				// 2. convert it into a list of CookieDetail object
 				cookieDetails = stream.filter(line -> !line.startsWith(CSV_HEADER)).map(line -> {
 					if (line != null) {
 						String[] cookieDetailArr = line.split(CSV_DELIMITER);
@@ -58,7 +59,7 @@ public class CookieUtils {
 						}
 					}
 					return null;
-				}).filter(cookieDetail -> cookieDetail != null).collect(Collectors.toList());
+				}).filter(Objects::nonNull).collect(Collectors.toList());
 
 			} catch (Exception e) {
 				String errorMsg = String.format("Unable to parse the file %s. Error message: %s", fileName,
@@ -84,15 +85,18 @@ public class CookieUtils {
 		List<String> activeCookieDetails = new ArrayList<>();
 
 		Long maxNoOfActiveCookie = Long.MIN_VALUE;
+		// Filter the cookie name and number of occurrences  
 		Map<String, Long> cookieMap = cookieDetails.stream()
 				.filter(cookieDetail -> cookieDate.isEqual(cookieDetail.getCookieTime().toLocalDate()))
 				.collect(Collectors.groupingBy(CookieDetail::getCookieName, Collectors.counting()));
 
+		//Sort in reverse order so that most active cookies come at the top
 		LinkedHashMap<String, Long> collect = cookieMap.entrySet().stream()
 				.sorted(Entry.comparingByValue(Collections.reverseOrder()))
 				.collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2, LinkedHashMap::new));
 
 		for (Entry<String, Long> entry : collect.entrySet()) {
+			// Add the most active cookie to the list
 			if (entry.getValue() >= maxNoOfActiveCookie) {
 				activeCookieDetails.add(entry.getKey());
 				maxNoOfActiveCookie = entry.getValue();
