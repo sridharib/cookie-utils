@@ -54,8 +54,21 @@
 							<goal>single</goal>
 						</goals>
 					</execution>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<appendAssemblyId>false</appendAssemblyId>
+							<descriptors>
+								<descriptor>src/main/resources/assembly.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
+			
 		</plugins>
 		<finalName>cookie-utils</finalName>
 	</build>
