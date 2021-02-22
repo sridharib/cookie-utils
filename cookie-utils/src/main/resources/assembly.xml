@@ -18,6 +18,10 @@
 			<outputDirectory>/</outputDirectory>
 		</file>
 		<file>
+			<source>${project.basedir}/src/main/resources/cookie_log_m.csv</source>
+			<outputDirectory>/</outputDirectory>
+		</file>
+		<file>
 			<source>${project.basedir}/src/main/resources/run-cookie-utils.sh</source>
 			<outputDirectory>/</outputDirectory>
 		</file>

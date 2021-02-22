@@ -3,6 +3,8 @@ package com.quantcast;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.time.Duration;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -42,11 +44,22 @@ public class Main {
 			return;
 		}
 
+		Instant startTime = Instant.now();
+		LOGGER.info("Application start time {}", startTime);
+
 		List<CookieDetail> cookieDetails = CookieUtils.readAndParseCSV(fileStr);
 		List<String> mostActiveCookies = CookieUtils.fetchMostActiveCookies(cookieDetails, cookieDate);
 		for (String mostActiveCookie : mostActiveCookies) {
 			LOGGER.info(mostActiveCookie);
 		}
+
+		Instant endTime = Instant.now();
+		LOGGER.info("Application end time {}", endTime);
+		LOGGER.info("Total time {}ms to execute", Duration.between(startTime, endTime).toMillis());
+
+		Runtime runtime = Runtime.getRuntime();
+		long memory = runtime.totalMemory() - runtime.freeMemory();
+		LOGGER.info("Used memory is : {}mb", (memory / (1024L * 1024L)));
 	}
 
 	private static String parseArgs(String[] args, String key) {

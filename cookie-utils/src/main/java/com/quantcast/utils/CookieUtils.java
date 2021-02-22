@@ -85,12 +85,12 @@ public class CookieUtils {
 		List<String> activeCookieDetails = new ArrayList<>();
 
 		Long maxNoOfActiveCookie = Long.MIN_VALUE;
-		// Filter the cookie name and number of occurrences  
+		// Filter the cookie name and number of occurrences
 		Map<String, Long> cookieMap = cookieDetails.stream()
 				.filter(cookieDetail -> cookieDate.isEqual(cookieDetail.getCookieTime().toLocalDate()))
 				.collect(Collectors.groupingBy(CookieDetail::getCookieName, Collectors.counting()));
 
-		//Sort in reverse order so that most active cookies come at the top
+		// Sort in reverse order so that most active cookies come at the top
 		LinkedHashMap<String, Long> collect = cookieMap.entrySet().stream()
 				.sorted(Entry.comparingByValue(Collections.reverseOrder()))
 				.collect(Collectors.toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2, LinkedHashMap::new));

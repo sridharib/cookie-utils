@@ -21,6 +21,10 @@ public class MainTest {
 
 	@Before
 	public void setUp() {
+		setUpLogger();
+	}
+
+	private void setUpLogger() {
 		// get Logback Logger
 		fooLogger = (Logger) LoggerFactory.getLogger(Main.class);
 
@@ -42,12 +46,14 @@ public class MainTest {
 
 		Main.main(args);
 		List<ILoggingEvent> logsList = listAppender.list;
-		assertEquals("AtY0laUfhglK3lC7", logsList.get(0).getMessage());
-		assertEquals("SAZuXPGUrfbcn5UA", logsList.get(1).getMessage());
+		assertEquals("AtY0laUfhglK3lC7", logsList.get(1).getMessage());
+		assertEquals("SAZuXPGUrfbcn5UA", logsList.get(2).getMessage());
 
+		setUpLogger();
+		logsList = listAppender.list;
 		args = new String[] { "-f", fileName, "-d", "2018-12-07" };
 		Main.main(args);
-		assertEquals("4sMM2LxV07bPJzwf", logsList.get(2).getMessage());
+		assertEquals("4sMM2LxV07bPJzwf", logsList.get(1).getMessage());
 	}
 
 	@Test
